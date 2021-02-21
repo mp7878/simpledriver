@@ -1,0 +1,87 @@
+;
+; simpledriver.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Sample ; TODO: edit Class
+ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=simpledriver.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+PnpLockDown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+simpledriver_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+simpledriver.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%simpledriver.DeviceDesc%=simpledriver_Device, Root\simpledriver ; TODO: edit hw-id
+
+[simpledriver_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+simpledriver.sys
+
+;-------------- Service installation
+[simpledriver_Device.NT.Services]
+AddService = simpledriver,%SPSVCINST_ASSOCSERVICE%, simpledriver_Service_Inst
+
+; -------------- simpledriver driver install sections
+[simpledriver_Service_Inst]
+DisplayName    = %simpledriver.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\simpledriver.sys
+
+;
+;--- simpledriver_Device Coinstaller installation ------
+;
+
+[simpledriver_Device.NT.CoInstallers]
+AddReg=simpledriver_Device_CoInstaller_AddReg
+CopyFiles=simpledriver_Device_CoInstaller_CopyFiles
+
+[simpledriver_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[simpledriver_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[simpledriver_Device.NT.Wdf]
+KmdfService =  simpledriver, simpledriver_wdfsect
+[simpledriver_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Samples" ; TODO: edit ClassName
+DiskName = "simpledriver Installation Disk"
+simpledriver.DeviceDesc = "simpledriver Device"
+simpledriver.SVCDESC = "simpledriver Service"

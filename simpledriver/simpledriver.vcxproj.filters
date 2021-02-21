@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{dbd91d08-b2a7-48d6-9195-e4684cf4c7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{a326d9b6-c54d-4f08-a798-d23f5a813382}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="entry.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="nt.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="comm.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
