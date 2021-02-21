@@ -9,7 +9,7 @@ auto PopulateIO( PDEVICE_OBJECT device_object , PIRP irp ) -> NTSTATUS
 	return irp->IoStatus.Status;
 }
 
-auto DriverControl( DEVICE_OBJECT* device_object , PIRP irp ) -> NTSTATUS
+auto DriverControl( PDEVICE_OBJECT device_object , PIRP irp ) -> NTSTATUS
 {
 	UNREFERENCED_PARAMETER( device_object );
 
