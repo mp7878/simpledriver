@@ -10,4 +10,4 @@ $ sc create MyDriver binPath= path_to_driver type= kernel
 $ sc start MyDriver
 ```
 
-You can now run the example as admin which will print out the current baseaddress of running program.
+You can now run the example which will print out the address of the running program.
