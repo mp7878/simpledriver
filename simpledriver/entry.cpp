@@ -1,7 +1,7 @@
 #include "nt.hpp"
 #include "comm.hpp"
 
-auto PopulateIO( PDEVICE_OBJECT device_object , PIRP irp ) -> NTSTATUS
+auto HandleOther( PDEVICE_OBJECT device_object , PIRP irp ) -> NTSTATUS
 {
 	UNREFERENCED_PARAMETER( device_object );
 
@@ -62,8 +62,8 @@ extern "C" auto DriverEntry ( PDRIVER_OBJECT driver_object , PUNICODE_STRING reg
 
 	driver_object->MajorFunction[ IRP_MJ_DEVICE_CONTROL ] = DriverControl;
 	driver_object->DriverUnload = reinterpret_cast<PDRIVER_UNLOAD>( DriverUnload );
-	driver_object->MajorFunction[ IRP_MJ_CREATE ] = PopulateIO;
-	driver_object->MajorFunction[ IRP_MJ_CLOSE ] = PopulateIO;
+	driver_object->MajorFunction[ IRP_MJ_CREATE ] = HandleOther;
+	driver_object->MajorFunction[ IRP_MJ_CLOSE ] = HandleOther;
 	
 	return STATUS_SUCCESS;
 	
